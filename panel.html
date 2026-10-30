@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel del dueño · Eddie's Burgers</title>
+  <meta name="theme-color" content="#141414">
+  <link rel="icon" type="image/png" href="img/eee-badge.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ---------- Panel del dueño ---------- */
+    :root { --bar: #E2462F; --warn: #F2B33D; }
+    .panel { padding-top: 36px; padding-bottom: 72px; }
+    .panel h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); }
+    .panel-badge {
+      padding: 6px 12px;
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* acceso con clave */
+    .panel-login { max-width: 420px; margin: 8vh auto 0; }
+    .panel-login p { margin-top: 10px; color: var(--muted); }
+    .panel-login form { display: grid; gap: 12px; margin-top: 28px; }
+
+    .demo-banner {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 26px;
+      padding: 14px 18px;
+      border: 1px solid rgba(242, 179, 61, .45);
+      border-radius: 14px;
+      background: rgba(242, 179, 61, .1);
+      color: #F6D58E;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+    .demo-banner strong { color: #FFE3A8; }
+    .demo-banner svg { flex: none; width: 20px; height: 20px; margin-top: 2px; }
+    .error-banner {
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      border: 1px solid rgba(226, 70, 47, .5);
+      border-radius: 12px;
+      background: rgba(226, 70, 47, .12);
+      color: #FFB4A8;
+      font-size: .88rem;
+      font-weight: 600;
+    }
+    .error-banner[hidden], .demo-banner[hidden] { display: none; }
+
+    .dash-head { margin-bottom: 22px; }
+    .dash-sub { margin-top: 8px; color: var(--muted); font-size: .92rem; }
+
+    /* filtros: una sola fila arriba de todo */
+    .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 18px; }
+    .chip {
+      padding: 9px 16px;
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      font-size: .84rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .chip:hover { border-color: var(--text); }
+    .chip[aria-pressed="true"] { background: var(--white); border-color: var(--white); color: var(--ink); }
+    .filters .spacer { flex: 1; }
+
+    /* números principales */
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi {
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+    }
+    .kpi-label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+    .kpi-value {
+      margin-top: 6px;
+      font-size: clamp(1.2rem, 2.6vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .panel-badge { display: none; }
+      .kpi { padding: 16px; }
+    }
+
+    /* tarjetas */
+    .panel-card {
+      min-width: 0;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+    }
+    .panel-card h2 {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.3;
+    }
+    .card-sub { margin: 2px 0 16px; color: var(--muted); font-size: .82rem; }
+    .card-sub + .card-sub { margin-top: -12px; }
+    .grid-top { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 16px; margin-bottom: 16px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .stack { display: grid; gap: 16px; margin-bottom: 16px; }
+    @media (max-width: 900px) {
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-top, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    #dash.is-loading .kpis, #dash.is-loading .grid-top,
+    #dash.is-loading .grid-2, #dash.is-loading .stack { opacity: .45; transition: opacity .2s; }
+
+    /* la más pedida */
+    .top-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+    .top-photo { aspect-ratio: 4 / 3; overflow: hidden; background: #191919; }
+    .top-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+    .top-photo.is-mascot { display: grid; place-items: center; }
+    .top-photo.is-mascot img { width: 55%; height: auto; object-fit: contain; }
+    .top-body { padding: 20px 24px 24px; }
+    .top-kicker { font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--red-2); }
+    .top-name { margin-top: 6px; font-family: var(--font-display); font-size: 3rem; line-height: 1; }
+    .top-stat { margin-top: 8px; color: var(--muted); font-size: .92rem; }
+    .top-stat b { color: var(--text); }
+
+    /* barras horizontales: un solo color, crecen desde la línea base */
+    .hbars { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(96px, 32%) minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      padding: 6px 8px;
+      border-radius: 8px;
+    }
+    .bar-row:hover, .bar-row:focus-visible { background: rgba(255, 255, 255, .05); outline: none; }
+    .bar-row:focus-visible { box-shadow: inset 0 0 0 2px var(--red-2); }
+    .bar-label { overflow: hidden; font-size: .88rem; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+    .bar-area { display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 20px; border-left: 1px solid var(--line-2); }
+    .bar-fill { height: 16px; background: var(--bar); border-radius: 0 4px 4px 0; transition: width .45s var(--ease); }
+    .bar-row:hover .bar-fill, .bar-row:focus-visible .bar-fill { filter: brightness(1.15); }
+    .bar-value { font-size: .85rem; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    @media (max-width: 480px) {
+      .bar-row { grid-template-columns: 1fr; gap: 4px; }
+      .bar-label { white-space: normal; }
+    }
+
+    /* columnas: pedidos por día */
+    .cols {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+      height: 210px;
+      border-bottom: 1px solid var(--line-2);
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      border-radius: 8px 8px 0 0;
+    }
+    .col:hover, .col:focus-visible { background: rgba(255, 255, 255, .05); outline: none; }
+    .col:focus-visible { box-shadow: inset 0 0 0 2px var(--red-2); }
+    .col-value { font-size: .8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .col-fill { width: min(24px, 60%); background: var(--bar); border-radius: 4px 4px 0 0; transition: height .45s var(--ease); }
+    .col:hover .col-fill, .col:focus-visible .col-fill { filter: brightness(1.15); }
+    .col-labels {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .empty { padding: 18px 0; color: var(--muted); font-size: .9rem; }
+
+    /* vista de tabla (para leer los números sin pasar el mouse) */
+    .as-table { margin-top: 14px; }
+    .as-table summary { color: var(--muted); font-size: .8rem; font-weight: 600; cursor: pointer; }
+    .as-table table { width: 100%; margin-top: 8px; border-collapse: collapse; font-size: .85rem; }
+    .as-table th, .as-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+    .as-table th { color: var(--muted); font-weight: 600; }
+    .as-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    .sub-title { margin: 18px 0 8px; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .sub-title:first-of-type { margin-top: 0; }
+
+    .panel-note { margin-top: 28px; color: var(--muted); font-size: .82rem; line-height: 1.6; }
+
+    /* tooltip */
+    .tip {
+      position: fixed;
+      z-index: 100;
+      max-width: 260px;
+      padding: 8px 12px;
+      border: 1px solid var(--line-2);
+      border-radius: 10px;
+      background: #0E0E0E;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .5);
+      font-size: .8rem;
+      pointer-events: none;
+    }
+    .tip[hidden] { display: none; }
+    .tip strong { display: block; font-size: 1rem; }
+    .tip span { display: block; color: var(--muted); }
+  </style>
+  <script src="datos.js" defer></script>
+  <script src="panel.js" defer></script>
+</head>
+<body>
+  <header class="site-header is-scrolled">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Volver a la página de Eddie's Burgers">
+        <img src="img/eee-badge.png" alt="" width="42" height="42">
+        <span class="brand-text" aria-hidden="true">
+          <span class="brand-script">Eddie's</span>
+          <span class="brand-sub">Burgers</span>
+        </span>
+      </a>
+      <div class="header-actions">
+        <span class="panel-badge">Panel del dueño</span>
+        <button type="button" class="btn btn-ghost btn-sm" id="salir" hidden>Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="panel container">
+    <!-- Acceso con clave -->
+    <section class="panel-login" id="login" hidden>
+      <p class="eyebrow">Solo para el dueño</p>
+      <h1>Panel del dueño</h1>
+      <p>Escribí la clave para ver el ranking de hamburguesas y lo más pedido.</p>
+      <form id="login-form">
+        <label class="field-title" for="clave">Clave</label>
+        <input class="input" id="clave" type="password" autocomplete="current-password" required>
+        <p class="form-error" id="login-error" hidden></p>
+        <button type="submit" class="btn btn-red btn-lg">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Tablero -->
+    <section id="dash" hidden>
+      <div class="demo-banner" id="demo" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+        <p><strong>Modo ejemplo: estos números son inventados</strong>, solo para mostrar cómo se va a ver el panel.
+        Para ver los pedidos reales hay que activarlo una vez siguiendo los pasos de <b>panel-dueno/INSTRUCCIONES.md</b>.</p>
+      </div>
+      <p class="error-banner" id="error" role="alert" hidden></p>
+
+      <div class="dash-head">
+        <p class="eyebrow">Eddie's Burgers</p>
+        <h1>Ranking y pedidos</h1>
+        <p class="dash-sub" id="dash-sub">Pedidos armados en la página web.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Período">
+        <button type="button" class="chip" data-dias="7" aria-pressed="true">Últimos 7 días</button>
+        <button type="button" class="chip" data-dias="30" aria-pressed="false">Últimos 30 días</button>
+        <button type="button" class="chip" data-dias="90" aria-pressed="false">Últimos 90 días</button>
+        <button type="button" class="chip" data-dias="0" aria-pressed="false">Todo</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-ghost btn-sm" id="actualizar">Actualizar</button>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><p class="kpi-label">Pedidos</p><p class="kpi-value" id="k-pedidos">—</p></div>
+        <div class="kpi"><p class="kpi-label">Facturación</p><p class="kpi-value" id="k-fact">—</p></div>
+        <div class="kpi"><p class="kpi-label">Ticket promedio</p><p class="kpi-value" id="k-ticket">—</p></div>
+        <div class="kpi"><p class="kpi-label">Burgers vendidas</p><p class="kpi-value" id="k-burgers">—</p></div>
+      </div>
+
+      <div class="grid-top">
+        <article class="panel-card top-card" id="top-card" aria-live="polite"></article>
+        <article class="panel-card">
+          <h2>Ranking de hamburguesas</h2>
+          <p class="card-sub">Unidades vendidas de cada burger</p>
+          <div id="ch-ranking"></div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="panel-card">
+          <h2>Tamaño más pedido</h2>
+          <p class="card-sub">Unidades de burgers por tamaño</p>
+          <div id="ch-tamanos"></div>
+        </article>
+        <article class="panel-card">
+          <h2>Extras más pedidos</h2>
+          <p class="card-sub">Veces que se agregó cada extra</p>
+          <div id="ch-extras"></div>
+        </article>
+      </div>
+
+      <div class="stack">
+        <article class="panel-card">
+          <h2>Pedidos por día de la semana</h2>
+          <p class="card-sub">Cantidad de pedidos (lo de después de medianoche cuenta para la noche anterior)</p>
+          <div id="ch-dias"></div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="panel-card">
+          <h2>Lo más pedido de todo el menú</h2>
+          <p class="card-sub">Top 10, en unidades</p>
+          <div id="ch-top"></div>
+        </article>
+        <article class="panel-card">
+          <h2>Entrega y forma de pago</h2>
+          <p class="card-sub">Cantidad de pedidos</p>
+          <p class="sub-title">Entrega</p>
+          <div id="ch-entrega"></div>
+          <p class="sub-title">Forma de pago</p>
+          <div id="ch-pago"></div>
+        </article>
+      </div>
+
+      <p class="panel-note">
+        Este panel cuenta los pedidos que se arman en la página y se mandan por WhatsApp.
+        No incluye lo que se vende en el local ni los pedidos escritos directo por WhatsApp.
+        La facturación es la suma de los totales de esos pedidos, sin el envío.
+      </p>
+    </section>
+  </main>
+
+  <div class="tip" id="tip" role="tooltip" hidden></div>
+</body>
+</html>

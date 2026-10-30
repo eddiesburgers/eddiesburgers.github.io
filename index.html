@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Seguridad: la página solo carga sus propios archivos, las letras de Google y la planilla del panel.
+       Si se cambia el script corto de más abajo (classList.add("js")), hay que actualizar su sha256. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WZRJfWvsnNCPcxzZwvyhovnZGqhZaC+8gPGPRbx6wTk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Eddie's Burgers · Calidad aplastada en cada bocado</title>
+  <meta name="description" content="Eddie's Burgers: smash burgers, papitas, pickers y picadas para compartir. Armá tu pedido y mandalo por WhatsApp. Roca 483, Concepción, Tucumán.">
+  <meta name="theme-color" content="#141414">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Eddie's Burgers · Calidad aplastada en cada bocado">
+  <meta property="og:description" content="Smash burgers, papitas y picadas para compartir. Armá tu pedido y mandalo por WhatsApp.">
+  <!-- Cuando la página tenga su dirección, esta imagen tiene que ir con la dirección completa -->
+  <meta property="og:image" content="img/compartir.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_AR">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="img/eee-badge.png">
+  <link rel="apple-touch-icon" href="img/eee-badge.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Ops+One&family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="datos.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Formas reutilizables -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <path id="torn" d="M0 48 L0 20 L24 14 L40 22 L66 10 L90 18 L104 12 L130 24 L152 16 L170 20 L196 8 L220 18 L246 14 L262 26 L290 12 L316 20 L330 16 L356 24 L380 10 L402 18 L428 14 L446 22 L470 12 L498 20 L520 8 L544 16 L566 22 L590 12 L612 18 L636 10 L660 24 L684 14 L706 20 L730 8 L752 18 L776 12 L800 22 L824 14 L846 20 L870 10 L894 18 L916 24 L940 12 L962 18 L988 8 L1010 20 L1034 14 L1056 22 L1080 10 L1104 16 L1126 24 L1150 12 L1172 20 L1196 14 L1220 22 L1244 8 L1268 18 L1290 12 L1314 22 L1338 14 L1360 20 L1386 10 L1410 18 L1440 14 L1440 48 Z"/>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#menu">Saltar al menú</a>
+
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Eddie's Burgers, ir al inicio">
+        <img src="img/eee-badge.png" alt="" width="42" height="42">
+        <span class="brand-text" aria-hidden="true">
+          <span class="brand-script">Eddie's</span>
+          <span class="brand-sub">Burgers</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Principal">
+        <ul id="nav-links" class="nav-links">
+          <li><a href="#menu">Menú</a></li>
+          <li><a href="#picadas">Picadas</a></li>
+          <li><a href="#smashers">Smashers</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-btn" type="button" data-open-cart>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          <span class="cart-btn-label">Tu pedido</span>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+          <span class="sr-only">Abrir menú</span>
+          <span class="bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ===================== PORTADA ===================== -->
+    <section class="hero">
+      <p class="hero-bg-word" aria-hidden="true">THE REAL SMASH</p>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="status" id="estado" hidden>
+            <span class="dot" aria-hidden="true"></span>
+            <span class="status-text"></span>
+          </p>
+          <p class="hero-tag">#therealsmash</p>
+          <h1>Calidad aplastada <span>en cada bocado.</span></h1>
+          <p class="lead">
+            Smash burgers con carne de 90&nbsp;g aplastada en la plancha, cheddar que se derrite
+            y nuestra salsa Eddie's. Todas salen con papas.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-red btn-lg" href="#menu">
+              Armá tu pedido
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="#" data-wa>Escribinos</a>
+          </div>
+          <ul class="hero-facts">
+            <li><strong>7</strong><span>Smash burgers</span></li>
+            <li><strong>3</strong><span>Tamaños</span></li>
+            <li><strong>+7</strong><span>Extras</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-art">
+          <div class="hero-circle" aria-hidden="true"></div>
+          <svg class="hero-ring" viewBox="0 0 500 500" aria-hidden="true" focusable="false">
+            <defs>
+              <path id="ring-path" d="M250 250 m-226 0 a226 226 0 1 1 452 0 a226 226 0 1 1 -452 0"/>
+            </defs>
+            <text><textPath href="#ring-path" textLength="1410" lengthAdjust="spacing">CALIDAD APLASTADA EN CADA BOCADO ★ #THEREALSMASH ★ CALIDAD APLASTADA EN CADA BOCADO ★ #THEREALSMASH ★</textPath></text>
+          </svg>
+          <div class="mascot-wrap">
+            <img class="mascot" src="img/mascota.png" alt="Eddie, la mascota de Eddie's Burgers, saludando" width="800" height="800">
+          </div>
+          <p class="bubble" aria-hidden="true">¡Hola, smasher!<br>¿Qué pedimos hoy?</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cinta roja -->
+    <div class="band" aria-hidden="true">
+      <svg class="torn" viewBox="0 0 1440 48" preserveAspectRatio="none"><use href="#torn"/></svg>
+      <div class="band-inner">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span>Smash burgers</span><span class="sep">★</span>
+            <span>Todas salen con papas</span><span class="sep">★</span>
+            <span>#therealsmash</span><span class="sep">★</span>
+            <span>Picadas para compartir</span><span class="sep">★</span>
+          </div>
+          <div class="marquee-group">
+            <span>Smash burgers</span><span class="sep">★</span>
+            <span>Todas salen con papas</span><span class="sep">★</span>
+            <span>#therealsmash</span><span class="sep">★</span>
+            <span>Picadas para compartir</span><span class="sep">★</span>
+          </div>
+        </div>
+      </div>
+      <svg class="torn torn-flip" viewBox="0 0 1440 48" preserveAspectRatio="none"><use href="#torn"/></svg>
+    </div>
+
+    <!-- ===================== TIRA DE FOTOS ===================== -->
+    <!-- Aparece sola cuando hay al menos 3 fotos de burgers en img/burgers -->
+    <section class="strip" id="tira" aria-label="Nuestras smash burgers" hidden>
+      <div class="strip-track" id="tira-track"></div>
+    </section>
+
+    <!-- ===================== LA FAVORITA ===================== -->
+    <!-- Se completa sola con la burger marcada como "destacado" en datos.js -->
+    <section class="section spotlight" id="destacada">
+      <div class="container spotlight-grid">
+        <div class="spotlight-media reveal">
+          <div class="media is-empty" data-spot-media>
+            <span class="media-ph" aria-hidden="true">
+              <img src="img/eee-letras.png" alt="">
+              <small>Foto próximamente</small>
+            </span>
+          </div>
+          <span class="spotlight-badge" aria-hidden="true">Desde<strong data-spot-price>$14.500</strong></span>
+        </div>
+        <div class="spotlight-copy reveal" style="--d:1">
+          <p class="script-eyebrow">La favorita de la casa</p>
+          <h2>Probá la <span data-spot-name>Eddie</span>.<br><em>Después hablamos.</em></h2>
+          <p class="spotlight-desc" data-spot-desc></p>
+          <ul class="spotlight-points">
+            <li>Carne smasheada de 90 g</li>
+            <li>Simple, doble o triple</li>
+            <li>Sale con papas</li>
+          </ul>
+          <div class="spotlight-actions">
+            <button type="button" class="btn btn-red btn-lg" data-custom="eddie" data-spot-btn>Pedila ahora</button>
+            <a class="btn btn-ghost btn-lg" href="#menu">Ver todo el menú</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MENÚ ===================== -->
+    <!-- Los productos y precios se cambian en datos.js -->
+    <section id="menu" class="section menu">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">La carta</p>
+          <h2>Elegí tu smash</h2>
+          <p class="section-sub">Armá tu pedido acá mismo y te lo dejamos listo para mandar por WhatsApp.</p>
+        </header>
+
+        <div class="how-wrap">
+          <figure class="how-photo reveal">
+            <img src="img/contenido/bolsa.jpg" alt="Una burger envuelta entrando a la bolsa de Eddie's" loading="lazy" width="853" height="1280">
+          </figure>
+          <div class="how-side reveal" style="--d:1">
+            <p class="script-eyebrow">Pedir es así de fácil</p>
+            <ol class="how">
+              <li>
+                <span class="how-num">1</span>
+                <div><strong>Elegí</strong><span>Burgers, papitas, picadas y bebidas.</span></div>
+              </li>
+              <li>
+                <span class="how-num">2</span>
+                <div><strong>Personalizá</strong><span>Simple, doble o triple y extras a gusto.</span></div>
+              </li>
+              <li>
+                <span class="how-num">3</span>
+                <div><strong>Enviá</strong><span>Tu pedido llega armado a nuestro WhatsApp.</span></div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <nav class="cat-tabs" aria-label="Categorías del menú">
+        <div class="container">
+          <div class="cat-tabs-inner" id="cat-tabs"></div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <div id="menu-root">
+          <noscript>
+            <p class="noscript">Para armar tu pedido necesitás tener JavaScript activado. También podés escribirnos por WhatsApp al 3865 79 7800.</p>
+          </noscript>
+        </div>
+
+        <aside class="salon reveal" aria-labelledby="salon-title">
+          <div class="salon-head">
+            <span class="pill pill-age">+18 · Exclusivo salón</span>
+            <h3 id="salon-title">Solo en el salón</h3>
+            <p>Estas no viajan: las disfrutás en el local, con amigos.</p>
+          </div>
+          <ul class="salon-list" id="salon-list"></ul>
+        </aside>
+
+        <div class="carta-link reveal">
+          <p>¿Preferís ver la carta clásica?</p>
+          <button type="button" class="btn btn-ghost btn-sm" data-open-carta>Ver carta en imagen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LA PLANCHA ===================== -->
+    <section class="section process" id="plancha">
+      <div class="container spotlight-grid process-grid">
+        <div class="spotlight-copy reveal">
+          <p class="script-eyebrow">Así nace cada burger</p>
+          <h2>Aplastada <em>en la plancha.</em></h2>
+          <p class="spotlight-desc">
+            Cada medallón de 90 g se aplasta contra la plancha bien caliente. Así se forma
+            esa costra dorada y crocante por fuera, con la carne jugosa por dentro.
+            Eso es un smash de verdad.
+          </p>
+          <ul class="spotlight-points">
+            <li>Carne de 90 g</li>
+            <li>Costra dorada</li>
+            <li>#therealsmash</li>
+          </ul>
+          <div class="spotlight-actions">
+            <a class="btn btn-red btn-lg" href="#menu">Elegí la tuya</a>
+          </div>
+        </div>
+        <figure class="process-photo reveal" style="--d:1">
+          <img src="img/contenido/plancha.jpg" alt="Dos medallones de carne aplastándose en la plancha caliente" loading="lazy" width="853" height="1280">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== COMUNIDAD ===================== -->
+    <section id="smashers" class="section smashers">
+      <div class="container">
+        <div class="smashers-top">
+          <figure class="smashers-photo reveal">
+            <img src="img/contenido/papas-mano.jpg" alt="Una mano sacando papas fritas de la caja de Eddie's" loading="lazy" width="853" height="1280">
+          </figure>
+          <header class="smashers-head reveal" style="--d:1">
+            <p class="eyebrow">Comunidad</p>
+            <h2>Sumate a los <span>Smashers</span></h2>
+            <p class="section-sub">
+              Eddie's es más que una hamburguesería: es donde se juntan los amigos, la familia
+              y los fanáticos del smash. Seguinos, compartí y sé parte.
+            </p>
+          </header>
+        </div>
+
+        <div class="community-grid">
+          <a class="comm-card comm-ig reveal" href="#" data-ig style="--d:0">
+            <span class="comm-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <h3 data-ig-visible>@eddies.burgerr</h3>
+            <p>Lanzamientos, novedades y todo lo que sale de la plancha. Enterate primero.</p>
+            <span class="comm-cta">Seguinos en Instagram →</span>
+          </a>
+
+          <div class="comm-card comm-hash reveal" style="--d:1">
+            <span class="comm-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 9h14M4 15h14M10 3 8 21M16 3l-2 18"/></svg>
+            </span>
+            <h3>#therealsmash</h3>
+            <p>Subí la foto de tu smash, etiquetanos y sumate a la comunidad.</p>
+            <button type="button" class="comm-cta" data-copy="#therealsmash">Copiar hashtag</button>
+          </div>
+
+          <a class="comm-card comm-salon reveal" href="#contacto" style="--d:2">
+            <span class="comm-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c.6-.3 1.3-.5 2-.5 2.8 0 4 2 4 5"/></svg>
+            </span>
+            <h3>Vení al salón</h3>
+            <p>Picadas para compartir, fernet y cervezas de litro que solo están en el local.</p>
+            <span class="comm-cta">Ver dirección →</span>
+          </a>
+        </div>
+
+        <div class="gallery" id="galeria" hidden></div>
+
+        <figure class="slogan-band reveal">
+          <img src="img/local/local-brindis.jpg" alt="Amigos brindando con hamburguesas de Eddie's en una mesa" loading="lazy" width="1600" height="1067">
+          <blockquote class="slogan">
+            <p><span class="star" aria-hidden="true">★</span> Disfrutá en compañía, compartí lo que te gusta. <span class="star" aria-hidden="true">★</span></p>
+          </blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACTO ===================== -->
+    <section id="contacto" class="section contact">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <p class="eyebrow">Vení a vernos</p>
+          <h2 data-direccion>Roca 483</h2>
+          <p class="contact-city" data-ciudad>Concepción, Tucumán</p>
+          <dl class="hours" id="horarios-lista"></dl>
+          <ul class="contact-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 3.6 11.5 8.5 8.5 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>
+              <span>WhatsApp: <a href="#" data-wa data-wa-visible>3865 79 7800</a></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+              <span>Instagram: <a href="#" data-ig data-ig-visible>@eddies.burgerr</a></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+              <span>Delivery y retiro en el local</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg>
+              <span>Pagás con: <b data-pagos>Efectivo, QR, Mercado Pago y tarjeta de débito o crédito</b></span>
+            </li>
+          </ul>
+          <div class="contact-actions">
+            <a class="btn btn-red" href="#" data-maps>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              Cómo llegar
+            </a>
+            <a class="btn btn-ghost" href="#" data-wa>Escribinos</a>
+          </div>
+        </div>
+
+        <!-- Fotos del local -->
+        <div class="local-photos reveal" style="--d:1">
+          <figure class="local-main">
+            <img src="img/local/local-mesa.jpg" alt="Amigos comiendo en las mesas de la vereda de Eddie's, con el cartel de neón de fondo" loading="lazy" width="1600" height="1067">
+          </figure>
+          <figure class="local-side">
+            <img src="img/local/local-bolsa.jpg" alt="Una chica sonriendo con la bolsa de Eddie's Burgers" loading="lazy" width="1067" height="1600">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LLAMADO FINAL ===================== -->
+    <div class="final-wrap">
+      <svg class="torn" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><use href="#torn"/></svg>
+      <section class="final-cta">
+        <div class="container final-inner reveal">
+          <img class="final-mascot" src="img/mascota.png" alt="" width="800" height="800">
+          <h2>¿Se te antojó?</h2>
+          <p>Armá tu pedido en un minuto y mandalo directo a nuestro WhatsApp.</p>
+          <a class="btn btn-white btn-lg" href="#menu">Armar mi pedido</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== PIE ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#inicio" aria-label="Eddie's Burgers, ir al inicio">
+            <img src="img/eee-badge.png" alt="" width="42" height="42">
+            <span class="brand-text" aria-hidden="true">
+              <span class="brand-script">Eddie's</span>
+              <span class="brand-sub">Burgers</span>
+            </span>
+          </a>
+          <p class="footer-tag">Calidad aplastada en cada bocado</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explorá</h4>
+          <ul>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#picadas">Picadas</a></li>
+            <li><a href="#smashers">Smashers</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><span data-direccion>Roca 483</span>, <span data-ciudad>Concepción, Tucumán</span></li>
+            <li><a href="#" data-wa>WhatsApp <span data-wa-visible>3865 79 7800</span></a></li>
+            <li><a href="#" data-ig>Instagram <span data-ig-visible>@eddies.burgerr</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year">2026</span> Eddie's Burgers. Todos los derechos reservados.</p>
+        <p>Bebidas con alcohol solo para mayores de 18 años.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Barra flotante del pedido -->
+  <button class="cart-bar" type="button" data-open-cart aria-hidden="true" tabindex="-1">
+    <span class="cart-bar-info">
+      <small><span data-cart-count-text>0 productos</span></small>
+      <strong data-cart-total>$0</strong>
+    </span>
+    <span class="cart-bar-go">
+      Ver mi pedido
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </button>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a class="wa-float" href="#" data-wa aria-label="Escribinos por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 3.6 11.5 8.5 8.5 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>
+  </a>
+
+  <!-- Aviso "agregado" -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ===================== VENTANA: ARMÁ TU BURGER ===================== -->
+  <dialog class="sheet" id="burger-dialog" aria-labelledby="bd-title">
+    <form method="dialog" id="burger-form" class="sheet-form">
+      <div class="sheet-head">
+        <p class="eyebrow">Armá tu smash</p>
+        <h3 id="bd-title">Burger</h3>
+        <p class="sheet-desc" id="bd-desc"></p>
+        <button type="button" class="close-btn" data-close aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-body">
+        <div id="bd-media"></div>
+        <fieldset class="field">
+          <legend class="field-title">Tamaño</legend>
+          <div class="size-options" id="bd-sizes"></div>
+        </fieldset>
+        <fieldset class="field">
+          <legend class="field-title">Extras <small>Tu burger, tus reglas</small></legend>
+          <div class="extras-list" id="bd-extras"></div>
+        </fieldset>
+        <div class="field">
+          <label class="field-title" for="bd-nota">¿Algo para aclarar?</label>
+          <input class="input" id="bd-nota" maxlength="120" placeholder="Ej: sin pepinillos">
+        </div>
+      </div>
+      <div class="sheet-foot">
+        <div class="qty" role="group" aria-label="Cantidad">
+          <button type="button" data-bd-qty="-1" aria-label="Restar uno">−</button>
+          <output id="bd-qty">1</output>
+          <button type="button" data-bd-qty="1" aria-label="Sumar uno">+</button>
+        </div>
+        <button type="submit" class="btn btn-red btn-grow" value="add">
+          Agregar · <span id="bd-total">$0</span>
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ===================== VENTANA: TU PEDIDO ===================== -->
+  <dialog class="drawer" id="cart" aria-labelledby="cart-title">
+    <div class="sheet-head">
+      <p class="eyebrow">Eddie's Burgers</p>
+      <h3 id="cart-title">Tu pedido</h3>
+      <button type="button" class="close-btn" data-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="cart-empty" id="cart-empty">
+        <img src="img/mascota.png" alt="" width="800" height="800">
+        <p><strong>Todavía no agregaste nada.</strong><br>¡Elegí tu smash y armamos el pedido!</p>
+        <a href="#menu" class="btn btn-red" data-close>Ver el menú</a>
+      </div>
+
+      <div class="cart-sent" id="cart-sent" hidden>
+        <div class="sent-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+        <p><strong>¡Listo, smasher!</strong><br>Tu pedido es el <b class="sent-code" id="cart-code"></b>.<br>Se abrió WhatsApp con el pedido: solo falta que toques <b>enviar</b>. Te confirmamos por ahí.</p>
+        <div class="sent-actions">
+          <button type="button" class="btn btn-ghost" id="cart-back">Volver al pedido</button>
+          <button type="button" class="btn btn-red" id="cart-clear">Empezar uno nuevo</button>
+        </div>
+      </div>
+
+      <div class="cart-filled" id="cart-filled" hidden>
+        <ul class="cart-lines" id="cart-lines"></ul>
+
+        <form class="cart-form" id="cart-form" novalidate>
+          <div class="field">
+            <label class="field-title" for="cf-nombre">Tu nombre</label>
+            <input class="input" id="cf-nombre" name="nombre" autocomplete="name" maxlength="60" required>
+          </div>
+          <fieldset class="field">
+            <legend class="field-title">¿Cómo lo querés?</legend>
+            <div class="seg" id="cf-entrega"></div>
+          </fieldset>
+          <div class="field" id="cf-dir-wrap">
+            <label class="field-title" for="cf-dir">Dirección de entrega</label>
+            <input class="input" id="cf-dir" name="direccion" autocomplete="street-address" maxlength="120" placeholder="Calle, número y referencia">
+          </div>
+          <fieldset class="field">
+            <legend class="field-title">Forma de pago</legend>
+            <div class="seg" id="cf-pago"></div>
+          </fieldset>
+          <div class="field">
+            <label class="field-title" for="cf-nota">Aclaraciones <small>(opcional)</small></label>
+            <textarea class="input" id="cf-nota" name="nota" rows="2" maxlength="200" placeholder="Ej: tocar timbre, salsa aparte…"></textarea>
+          </div>
+          <p class="cart-note" id="cart-age" hidden>Las bebidas con alcohol se venden solo a mayores de 18 años.</p>
+          <p class="form-error" id="cf-error" role="alert" hidden></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="sheet-foot cart-foot" id="cart-foot" hidden>
+      <div class="cart-total">
+        <span>Total</span>
+        <strong data-cart-total>$0</strong>
+      </div>
+      <p class="cart-note">El costo de envío, si corresponde, te lo confirmamos por WhatsApp.</p>
+      <button type="submit" form="cart-form" class="btn btn-wa btn-lg btn-block">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 3.6 11.5 8.5 8.5 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>
+        Enviar pedido por WhatsApp
+      </button>
+    </div>
+  </dialog>
+
+  <!-- ===================== VENTANA: CARTA EN IMAGEN ===================== -->
+  <dialog class="sheet sheet-wide" id="carta" aria-labelledby="carta-title">
+    <div class="sheet-head">
+      <p class="eyebrow">Eddie's Burgers</p>
+      <h3 id="carta-title">La carta</h3>
+      <button type="button" class="close-btn" data-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body carta-images">
+      <img src="img/carta-burgers.jpg" alt="Carta de Eddie's Burgers: smash burgers, tamaños, extras, papitas, pickers y bebidas" loading="lazy" width="912" height="1280">
+      <img src="img/carta-nuevos.jpg" alt="Carta de nuevos productos: nuggets, picadas, fernet, cervezas y aguas saborizadas" loading="lazy" width="912" height="1280">
+    </div>
+  </dialog>
+</body>
+</html>
